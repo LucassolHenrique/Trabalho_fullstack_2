@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import { 
   Plus, 
   Search, 
@@ -31,6 +32,7 @@ interface Produto {
 }
 
 export const Produtos: React.FC = () => {
+  const { user } = useAuth();
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
@@ -233,9 +235,11 @@ export const Produtos: React.FC = () => {
           </select>
         </div>
 
-        <button onClick={openCreateModal} className="btn btn-primary">
-          <Plus size={18} /> Novo Produto
-        </button>
+        {user?.role !== 'visualizador' && (
+          <button onClick={openCreateModal} className="btn btn-primary">
+            <Plus size={18} /> Novo Produto
+          </button>
+        )}
       </div>
 
       {/* Products Table */}
@@ -248,7 +252,7 @@ export const Produtos: React.FC = () => {
               <th>Preço</th>
               <th>Status do Estoque</th>
               <th style={{ width: '180px' }}>Controle Rápido</th>
-              <th style={{ width: '120px', textAlign: 'right' }}>Ações</th>
+              {user?.role !== 'visualizador' && <th style={{ width: '120px', textAlign: 'right' }}>Ações</th>}
             </tr>
           </thead>
           <tbody>
@@ -277,46 +281,50 @@ export const Produtos: React.FC = () => {
                   <td>
                     {/* Quick Stock adjustment controls (Concept A Business Rule) */}
                     <div className="stock-adjust-cell">
-                      <div className="quick-stock-controls">
-                        <button 
-                          className="quick-stock-btn minus"
-                          onClick={() => handleQuickStock(prod.id, -1)}
-                          disabled={prod.estoque <= 0}
-                          title="Diminuir 1 un."
-                        >
-                          <ChevronDown size={16} />
-                        </button>
-                        <button 
-                          className="quick-stock-btn"
-                          onClick={() => handleQuickStock(prod.id, 1)}
-                          title="Aumentar 1 un."
-                        >
-                          <ChevronUp size={16} />
-                        </button>
-                      </div>
+                      {user?.role !== 'visualizador' && (
+                        <div className="quick-stock-controls">
+                          <button 
+                            className="quick-stock-btn minus"
+                            onClick={() => handleQuickStock(prod.id, -1)}
+                            disabled={prod.estoque <= 0}
+                            title="Diminuir 1 un."
+                          >
+                            <ChevronDown size={16} />
+                          </button>
+                          <button 
+                            className="quick-stock-btn"
+                            onClick={() => handleQuickStock(prod.id, 1)}
+                            title="Aumentar 1 un."
+                          >
+                            <ChevronUp size={16} />
+                          </button>
+                        </div>
+                      )}
                       <span className="stock-badge-display" style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
                         Estoque: <strong>{prod.estoque}</strong>
                       </span>
                     </div>
                   </td>
-                  <td>
-                    <div className="action-buttons">
-                      <button 
-                        onClick={() => openEditModal(prod)} 
-                        className="btn btn-secondary btn-sm btn-icon"
-                        title="Editar produto"
-                      >
-                        <Edit size={14} />
-                      </button>
-                      <button 
-                        onClick={() => handleDelete(prod.id, prod.nome)} 
-                        className="btn btn-danger btn-sm btn-icon"
-                        title="Deletar produto"
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                  </td>
+                  {user?.role !== 'visualizador' && (
+                    <td>
+                      <div className="action-buttons">
+                        <button 
+                          onClick={() => openEditModal(prod)} 
+                          className="btn btn-secondary btn-sm btn-icon"
+                          title="Editar produto"
+                        >
+                          <Edit size={14} />
+                        </button>
+                        <button 
+                          onClick={() => handleDelete(prod.id, prod.nome)} 
+                          className="btn btn-danger btn-sm btn-icon"
+                          title="Deletar produto"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    </td>
+                  )}
                 </tr>
               ))
             )}

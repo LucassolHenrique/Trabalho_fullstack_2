@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, ShoppingBag, Layers, LogOut, Menu, User } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, Layers, LogOut, Menu, User, Users } from 'lucide-react';
 import './Layout.css';
 
 export const Layout: React.FC = () => {
@@ -74,6 +74,17 @@ export const Layout: React.FC = () => {
             <Layers size={20} />
             <span>Categorias</span>
           </NavLink>
+
+          {user?.role === 'admin' && (
+            <NavLink 
+              to="/usuarios" 
+              className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+              onClick={() => setSidebarOpen(false)}
+            >
+              <Users size={20} />
+              <span>Usuários</span>
+            </NavLink>
+          )}
         </nav>
 
         <div className="sidebar-footer">
@@ -97,8 +108,13 @@ export const Layout: React.FC = () => {
 
           <div className="user-profile">
             <div className="user-info">
-              <p className="user-name">{user?.email || 'admin@zaffari.com'}</p>
-              <p className="user-role">Administrador</p>
+              <p className="user-name">{user?.email || 'usuario@example.com'}</p>
+              <p className="user-role">
+                {user?.role === 'admin' && 'Administrador'}
+                {user?.role === 'operador' && 'Operador'}
+                {user?.role === 'visualizador' && 'Visualizador'}
+                {!user?.role && 'Visualizador'}
+              </p>
             </div>
             <div className="avatar">
               {user ? getInitials(user.email) : <User size={20} />}

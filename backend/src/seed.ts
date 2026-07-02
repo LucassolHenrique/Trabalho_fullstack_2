@@ -33,19 +33,31 @@ async function seedDatabase() {
     // Criar usuários de teste
     const senhaHash1 = await bcryptjs.hash('senha123', 10);
     const senhaHash2 = await bcryptjs.hash('senha456', 10);
+    const senhaHash3 = await bcryptjs.hash('senha789', 10);
 
     const usuario1 = usuarioRepository.create({
       email: 'admin@example.com',
       senha: senhaHash1,
+      isAdmin: true,
+      role: 'admin',
     });
 
     const usuario2 = usuarioRepository.create({
-      email: 'user@example.com',
+      email: 'operador@example.com',
       senha: senhaHash2,
+      isAdmin: false,
+      role: 'operador',
     });
 
-    await usuarioRepository.save([usuario1, usuario2]);
-    console.log('✅ Usuários criados (admin@example.com / user@example.com)');
+    const usuario3 = usuarioRepository.create({
+      email: 'visualizador@example.com',
+      senha: senhaHash3,
+      isAdmin: false,
+      role: 'visualizador',
+    });
+
+    await usuarioRepository.save([usuario1, usuario2, usuario3]);
+    console.log('✅ Usuários criados (admin / operador / visualizador)');
 
     // Criar categorias
     const categoria1 = categoriaRepository.create({
@@ -125,8 +137,9 @@ async function seedDatabase() {
 
     console.log('\n✅ Banco de dados populado com sucesso!');
     console.log('\nUsuários de teste:');
-    console.log('- Email: admin@example.com | Senha: senha123');
-    console.log('- Email: user@example.com | Senha: senha456');
+    console.log('- Email: admin@example.com        | Senha: senha123 | Cargo: Admin (Pode tudo)');
+    console.log('- Email: operador@example.com     | Senha: senha456 | Cargo: Operador (Pode modificar produtos/cat)');
+    console.log('- Email: visualizador@example.com | Senha: senha789 | Cargo: Visualizador (Apenas leitura)');
     console.log('\nCategorias:');
     console.log('- Eletrônicos');
     console.log('- Livros');

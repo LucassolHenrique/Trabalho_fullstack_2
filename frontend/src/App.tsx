@@ -7,6 +7,7 @@ import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import { Produtos } from './pages/Produtos';
 import { Categorias } from './pages/Categorias';
+import { Usuarios } from './pages/Usuarios';
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/produtos" element={<Produtos />} />
               <Route path="/categorias" element={<Categorias />} />
+              <Route path="/usuarios" element={<Usuarios />} />
             </Route>
           </Route>
 

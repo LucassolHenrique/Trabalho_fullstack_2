@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import { 
   ShoppingBag, 
   Layers, 
@@ -29,6 +30,7 @@ interface Produto {
 }
 
 export const Dashboard: React.FC = () => {
+  const { user } = useAuth();
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
@@ -174,98 +176,100 @@ export const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      <div className="dashboard-panels">
+      <div className="dashboard-panels" style={{ gridTemplateColumns: user?.role === 'visualizador' ? '1fr' : '1fr 1fr' }}>
         {/* Lógica de Negócio: Reajuste em Lote */}
-        <div className="card action-panel">
-          <div>
-            <h3 className="panel-title">Ajuste de Preços em Lote</h3>
-            <p className="panel-desc">
-              Aplique uma alteração percentual de preço a todos os produtos de uma categoria selecionada de forma automática.
-            </p>
-          </div>
-
-          {actionSuccess && (
-            <div className="badge badge-success" style={{ padding: '10px 14px', width: '100%', textTransform: 'none', justifyContent: 'flex-start', gap: '8px', marginBottom: '10px' }}>
-              <CheckCircle2 size={16} />
-              <span>{actionSuccess}</span>
-            </div>
-          )}
-
-          {actionError && (
-            <div className="badge badge-danger" style={{ padding: '10px 14px', width: '100%', textTransform: 'none', justifyContent: 'flex-start', gap: '8px', marginBottom: '10px' }}>
-              <AlertCircle size={16} />
-              <span>{actionError}</span>
-            </div>
-          )}
-
-          <form onSubmit={handleReajusteLote}>
-            <div className="form-group">
-              <label className="form-label">Categoria Alvo</label>
-              <select 
-                className="form-select"
-                value={reajusteCatId}
-                onChange={(e) => setReajusteCatId(e.target.value)}
-                disabled={isSubmitting}
-              >
-                <option value="">Selecione uma categoria...</option>
-                {categorias.map(cat => (
-                  <option key={cat.id} value={cat.id}>{cat.nome}</option>
-                ))}
-              </select>
+        {user?.role !== 'visualizador' && (
+          <div className="card action-panel">
+            <div>
+              <h3 className="panel-title">Ajuste de Preços em Lote</h3>
+              <p className="panel-desc">
+                Aplique uma alteração percentual de preço a todos os produtos de uma categoria selecionada de forma automática.
+              </p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            {actionSuccess && (
+              <div className="badge badge-success" style={{ padding: '10px 14px', width: '100%', textTransform: 'none', justifyContent: 'flex-start', gap: '8px', marginBottom: '10px' }}>
+                <CheckCircle2 size={16} />
+                <span>{actionSuccess}</span>
+              </div>
+            )}
+
+            {actionError && (
+              <div className="badge badge-danger" style={{ padding: '10px 14px', width: '100%', textTransform: 'none', justifyContent: 'flex-start', gap: '8px', marginBottom: '10px' }}>
+                <AlertCircle size={16} />
+                <span>{actionError}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleReajusteLote}>
               <div className="form-group">
-                <label className="form-label">Operação</label>
+                <label className="form-label">Categoria Alvo</label>
                 <select 
                   className="form-select"
-                  value={reajusteTipo}
-                  onChange={(e) => setReajusteTipo(e.target.value as any)}
+                  value={reajusteCatId}
+                  onChange={(e) => setReajusteCatId(e.target.value)}
                   disabled={isSubmitting}
                 >
-                  <option value="aumento">Aumentar Preço (+)</option>
-                  <option value="desconto">Dar Desconto (-)</option>
+                  <option value="">Selecione uma categoria...</option>
+                  {categorias.map(cat => (
+                    <option key={cat.id} value={cat.id}>{cat.nome}</option>
+                  ))}
                 </select>
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Porcentagem (%)</label>
-                <div style={{ position: 'relative' }}>
-                  <input 
-                    type="number" 
-                    step="0.01"
-                    min="0.01"
-                    className="form-input" 
-                    placeholder="10.00"
-                    value={reajustePorcento}
-                    onChange={(e) => setReajustePorcento(e.target.value !== '' ? Number(e.target.value) : '')}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="form-group">
+                  <label className="form-label">Operação</label>
+                  <select 
+                    className="form-select"
+                    value={reajusteTipo}
+                    onChange={(e) => setReajusteTipo(e.target.value as any)}
                     disabled={isSubmitting}
-                  />
-                  <Percent size={16} style={{ position: 'absolute', right: '14px', top: '14px', color: 'var(--text-muted)' }} />
+                  >
+                    <option value="aumento">Aumentar Preço (+)</option>
+                    <option value="desconto">Dar Desconto (-)</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Porcentagem (%)</label>
+                  <div style={{ position: 'relative' }}>
+                    <input 
+                      type="number" 
+                      step="0.01"
+                      min="0.01"
+                      className="form-input" 
+                      placeholder="10.00"
+                      value={reajustePorcento}
+                      onChange={(e) => setReajustePorcento(e.target.value !== '' ? Number(e.target.value) : '')}
+                      disabled={isSubmitting}
+                    />
+                    <Percent size={16} style={{ position: 'absolute', right: '14px', top: '14px', color: 'var(--text-muted)' }} />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <button 
-              type="submit" 
-              className="btn btn-primary" 
-              style={{ width: '100%', marginTop: '8px' }}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Processando reajuste...' : (
-                reajusteTipo === 'aumento' ? (
-                  <>
-                    <TrendingUp size={16} /> Aplicar Reajuste
-                  </>
-                ) : (
-                  <>
-                    <TrendingDown size={16} /> Aplicar Desconto
-                  </>
-                )
-              )}
-            </button>
-          </form>
-        </div>
+              <button 
+                type="submit" 
+                className="btn btn-primary" 
+                style={{ width: '100%', marginTop: '8px' }}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Processando reajuste...' : (
+                  reajusteTipo === 'aumento' ? (
+                    <>
+                      <TrendingUp size={16} /> Aplicar Reajuste
+                    </>
+                  ) : (
+                    <>
+                      <TrendingDown size={16} /> Aplicar Desconto
+                    </>
+                  )
+                )}
+              </button>
+            </form>
+          </div>
+        )}
 
         {/* Alertas de Estoque Crítico (< 5 unidades) */}
         <div className="card">

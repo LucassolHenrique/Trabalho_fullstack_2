@@ -11,6 +11,12 @@ export class Usuario {
   @Column()
   senha!: string;
 
+  @Column({ default: false })
+  isAdmin!: boolean;
+
+  @Column({ default: 'visualizador' })
+  role!: string;
+
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   dataCriacao!: Date;
 }

@@ -16,7 +16,10 @@ import { AuthController } from './controller/AuthController';
 import { createCategoriaRouter } from './router/categoriaRouter';
 import { createProdutoRouter } from './router/produtoRouter';
 import { createAuthRouter } from './router/authRouter';
+import { createUsuarioRouter } from './router/usuarioRouter';
+import { UsuarioController } from './controller/UsuarioController';
 import { authenticateToken } from './middleware/authenticateToken';
+import { authorizeRole } from './middleware/authorizeRole';
 // import { swaggerSpec } from './config/swagger';
 
 // Configuração do DataSource (banco de dados)
@@ -75,13 +78,18 @@ appDataSource
     const categoriaController = new CategoriaController(categoriaService);
     const produtoController = new ProdutoController(produtoService);
     const authController = new AuthController(authService);
+    const usuarioController = new UsuarioController(appDataSource);
 
     // Rotas públicas (sem autenticação)
     app.use('/api/auth', createAuthRouter(authController));
 
     // Rotas protegidas (com autenticação)
-    app.use('/api/categorias', authenticateToken, createCategoriaRouter(categoriaController));
-    app.use('/api/produtos', authenticateToken, createProdutoRouter(produtoController));
+    const writeAuth = authorizeRole(['admin', 'operador'], appDataSource);
+    const adminAuth = authorizeRole(['admin'], appDataSource);
+
+    app.use('/api/categorias', authenticateToken, createCategoriaRouter(categoriaController, writeAuth));
+    app.use('/api/produtos', authenticateToken, createProdutoRouter(produtoController, writeAuth));
+    app.use('/api/usuarios', authenticateToken, adminAuth, createUsuarioRouter(usuarioController));
 
     // Rota raiz
     app.get('/', (req, res) => {

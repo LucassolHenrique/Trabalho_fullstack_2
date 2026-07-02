@@ -13,6 +13,8 @@ export class AuthController {
         usuario: {
           id: resultado.usuario.id,
           email: resultado.usuario.email,
+          isAdmin: resultado.usuario.isAdmin,
+          role: resultado.usuario.role,
         },
         token: resultado.token,
       });
@@ -30,6 +32,8 @@ export class AuthController {
         usuario: {
           id: resultado.usuario.id,
           email: resultado.usuario.email,
+          isAdmin: resultado.usuario.isAdmin,
+          role: resultado.usuario.role,
         },
         token: resultado.token,
       });

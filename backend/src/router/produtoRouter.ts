@@ -345,17 +345,17 @@ import { ProdutoController } from '../controller/ProdutoController';
  *       404:
  *         description: Produto não encontrado
  */
-export function createProdutoRouter(produtoController: ProdutoController): Router {
+export function createProdutoRouter(produtoController: ProdutoController, writeAuth: any): Router {
   const router = Router();
 
   router.get('/', (req, res) => produtoController.getAllProdutos(req, res));
   router.get('/categoria/:categoriaId', (req, res) => produtoController.getProdutosByCategoria(req, res));
-  router.post('/reajuste-lote', (req, res) => produtoController.reajusteLote(req, res));
-  router.patch('/:id/estoque', (req, res) => produtoController.ajustarEstoque(req, res));
+  router.post('/reajuste-lote', writeAuth, (req, res) => produtoController.reajusteLote(req, res));
+  router.patch('/:id/estoque', writeAuth, (req, res) => produtoController.ajustarEstoque(req, res));
   router.get('/:id', (req, res) => produtoController.getProdutoById(req, res));
-  router.post('/', (req, res) => produtoController.createProduto(req, res));
-  router.put('/:id', (req, res) => produtoController.updateProduto(req, res));
-  router.delete('/:id', (req, res) => produtoController.deleteProduto(req, res));
+  router.post('/', writeAuth, (req, res) => produtoController.createProduto(req, res));
+  router.put('/:id', writeAuth, (req, res) => produtoController.updateProduto(req, res));
+  router.delete('/:id', writeAuth, (req, res) => produtoController.deleteProduto(req, res));
 
   return router;
 }

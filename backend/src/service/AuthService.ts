@@ -26,6 +26,8 @@ export class AuthService {
     const usuario = this.usuarioRepository.create({
       email,
       senha: senhaHash,
+      isAdmin: false,
+      role: 'visualizador',
     });
 
     const usuarioSalvo = await this.usuarioRepository.save(usuario);

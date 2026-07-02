@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import { Plus, Edit, Trash2, X, FolderKanban } from 'lucide-react';
 import './Categorias.css';
 
@@ -10,6 +11,7 @@ interface Categoria {
 }
 
 export const Categorias: React.FC = () => {
+  const { user } = useAuth();
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -123,9 +125,11 @@ export const Categorias: React.FC = () => {
           <h2 className="category-title-sec">Gerenciamento de Categorias</h2>
           <p className="category-description-text">Organize seus produtos em divisões lógicas.</p>
         </div>
-        <button onClick={openCreateModal} className="btn btn-primary">
-          <Plus size={18} /> Nova Categoria
-        </button>
+        {user?.role !== 'visualizador' && (
+          <button onClick={openCreateModal} className="btn btn-primary">
+            <Plus size={18} /> Nova Categoria
+          </button>
+        )}
       </div>
 
       {apiError && <div className="login-alert" style={{ marginBottom: '24px' }}>{apiError}</div>}
@@ -151,20 +155,22 @@ export const Categorias: React.FC = () => {
                 </p>
               </div>
 
-              <div className="category-card-actions">
-                <button 
-                  onClick={() => openEditModal(cat)} 
-                  className="btn btn-secondary btn-sm"
-                >
-                  <Edit size={14} /> Editar
-                </button>
-                <button 
-                  onClick={() => handleDelete(cat.id, cat.nome)} 
-                  className="btn btn-danger btn-sm"
-                >
-                  <Trash2 size={14} /> Excluir
-                </button>
-              </div>
+              {user?.role !== 'visualizador' && (
+                <div className="category-card-actions">
+                  <button 
+                    onClick={() => openEditModal(cat)} 
+                    className="btn btn-secondary btn-sm"
+                  >
+                    <Edit size={14} /> Editar
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(cat.id, cat.nome)} 
+                    className="btn btn-danger btn-sm"
+                  >
+                    <Trash2 size={14} /> Excluir
+                  </button>
+                </div>
+              )}
             </div>
           ))
         )}
