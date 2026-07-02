@@ -1,0 +1,59 @@
+/* Category Page Layout styling */
+.category-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.category-title-sec {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.category-description-text {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Modal Form modifications */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+}
+
+.category-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.category-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.category-card-body {
+  font-size: 13px;
+  color: var(--text-muted);
+  flex: 1;
+  margin-bottom: 16px;
+}
+
+.category-card-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  border-top: 1px solid var(--border-color);
+  padding-top: 12px;
+}

@@ -1,0 +1,196 @@
+/* Dashboard Container styles */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* Stat Cards */
+.stat-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.stat-badge {
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: var(--surface-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  border: 1px solid var(--border-color);
+}
+
+/* Layout for Dashboard panels */
+.dashboard-panels {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 24px;
+}
+
+/* Business action panel */
+.action-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: fit-content;
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.panel-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+/* Low Stock Alert Item */
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.alert-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--surface-lowest);
+  border: 1px solid var(--border-color);
+  padding: 12px 16px;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.alert-item:hover {
+  border-color: rgba(239, 68, 68, 0.3);
+  background-color: var(--danger-bg);
+}
+
+.alert-product-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.alert-category {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.alert-stock {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--danger);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Category Analytics visualizer */
+.analytics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.analytics-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.analytics-bar-bg {
+  width: 100%;
+  height: 8px;
+  background-color: var(--surface-lowest);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.analytics-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, #aa3bff 100%);
+  border-radius: 4px;
+  transition: width 1s ease-out;
+}
+
+/* Empty Alert view */
+.empty-alerts {
+  padding: 24px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .card {
+    padding: 16px;
+  }
+  
+  .stat-value {
+    font-size: 24px;
+  }
+  
+  .action-panel form > div {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+}

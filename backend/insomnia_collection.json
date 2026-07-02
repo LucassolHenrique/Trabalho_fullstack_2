@@ -1,0 +1,263 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-05-14T22:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v8.6.1",
+  "resources": [
+    {
+      "_id": "wrk_api_produtos",
+      "_type": "workspace",
+      "parentId": null,
+      "name": "🚀 API Gerenciamento Produtos & Categorias (JWT)",
+      "description": "API RESTful com Autenticação JWT, CRUDs, Relacionamentos e Validações",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_desenvolvimento",
+      "_type": "environment",
+      "parentId": "wrk_api_produtos",
+      "name": "Desenvolvimento",
+      "data": {
+        "baseUrl": "http://localhost:3000/api",
+        "token": "COLE_SEU_TOKEN_AQUI_APOS_LOGIN"
+      },
+      "color": "#00ff00",
+      "isPrivate": false,
+      "metaSortKey": 1
+    },
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "parentId": "wrk_api_produtos",
+      "name": "🔐 Autenticação (JWT)",
+      "description": "Login e Registro de Usuários",
+      "metaSortKey": -300
+    },
+    {
+      "_id": "req_auth_register",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "url": "{{ _.baseUrl }}/auth/register",
+      "name": "📝 Registrar Novo Usuário",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"novo.usuario@example.com\",\n  \"senha\": \"senha123\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "metaSortKey": -100
+    },
+    {
+      "_id": "req_auth_login",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "url": "{{ _.baseUrl }}/auth/login",
+      "name": "🔑 Login (Obter Token)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@example.com\",\n  \"senha\": \"senha123\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "metaSortKey": -50,
+      "description": "Usuários de teste: admin@example.com (senha123) ou user@example.com (senha456)\n\n**Copie o 'token' da resposta e cole em: env_desenvolvimento > token**"
+    },
+    {
+      "_id": "fld_categorias",
+      "_type": "request_group",
+      "parentId": "wrk_api_produtos",
+      "name": "📂 Categorias (CRUD)",
+      "description": "Requer autenticação JWT",
+      "metaSortKey": -200
+    },
+    {
+      "_id": "req_cat_list",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "url": "{{ _.baseUrl }}/categorias",
+      "name": "📋 Listar Todas as Categorias",
+      "method": "GET",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -100
+    },
+    {
+      "_id": "req_cat_get",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "url": "{{ _.baseUrl }}/categorias/311154b8-8402-4b1c-a00d-3341f5c2c6cb",
+      "name": "🔍 Obter Categoria por ID",
+      "method": "GET",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -90,
+      "description": "Substitua o ID com um ID válido de categoria"
+    },
+    {
+      "_id": "req_cat_create",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "url": "{{ _.baseUrl }}/categorias",
+      "name": "➕ Criar Nova Categoria",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Games\",\n  \"descricao\": \"Jogos e consoles\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -80
+    },
+    {
+      "_id": "req_cat_update",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "url": "{{ _.baseUrl }}/categorias/311154b8-8402-4b1c-a00d-3341f5c2c6cb",
+      "name": "✏️ Atualizar Categoria",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Eletrônicos Premium\",\n  \"descricao\": \"Produtos eletrônicos de alta qualidade\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -70,
+      "description": "Substitua o ID com um ID válido de categoria"
+    },
+    {
+      "_id": "req_cat_delete",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "url": "{{ _.baseUrl }}/categorias/311154b8-8402-4b1c-a00d-3341f5c2c6cb",
+      "name": "🗑️ Deletar Categoria",
+      "method": "DELETE",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -60,
+      "description": "Substitua o ID com um ID válido de categoria"
+    },
+    {
+      "_id": "fld_produtos",
+      "_type": "request_group",
+      "parentId": "wrk_api_produtos",
+      "name": "🛒 Produtos (CRUD & Relacionamentos)",
+      "description": "Requer autenticação JWT",
+      "metaSortKey": -100
+    },
+    {
+      "_id": "req_prod_list",
+      "_type": "request",
+      "parentId": "fld_produtos",
+      "url": "{{ _.baseUrl }}/produtos",
+      "name": "📋 Listar Todos os Produtos",
+      "method": "GET",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -100
+    },
+    {
+      "_id": "req_prod_get",
+      "_type": "request",
+      "parentId": "fld_produtos",
+      "url": "{{ _.baseUrl }}/produtos/f6209858-7c23-4ef8-9356-1336f9c3d373",
+      "name": "🔍 Obter Produto por ID",
+      "method": "GET",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -90,
+      "description": "Substitua o ID com um ID válido de produto"
+    },
+    {
+      "_id": "req_prod_by_categoria",
+      "_type": "request",
+      "parentId": "fld_produtos",
+      "url": "{{ _.baseUrl }}/produtos/categoria/311154b8-8402-4b1c-a00d-3341f5c2c6cb",
+      "name": "📦 Listar Produtos por Categoria",
+      "method": "GET",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -80,
+      "description": "Funcionalidade: Manipula duas entidades (Produto + Categoria)"
+    },
+    {
+      "_id": "req_prod_create",
+      "_type": "request",
+      "parentId": "fld_produtos",
+      "url": "{{ _.baseUrl }}/produtos",
+      "name": "➕ Criar Novo Produto",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Monitor 144Hz\",\n  \"preco\": 1299.99,\n  \"categoriaId\": \"311154b8-8402-4b1c-a00d-3341f5c2c6cb\",\n  \"descricao\": \"Monitor gamer com taxa de refresh 144Hz\",\n  \"estoque\": 5\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -70,
+      "description": "Validações: nome obrigatório, preco > 0, categoriaId deve existir"
+    },
+    {
+      "_id": "req_prod_update",
+      "_type": "request",
+      "parentId": "fld_produtos",
+      "url": "{{ _.baseUrl }}/produtos/f6209858-7c23-4ef8-9356-1336f9c3d373",
+      "name": "✏️ Atualizar Produto",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Notebook Dell XPS 15\",\n  \"preco\": 5999.99,\n  \"estoque\": 3,\n  \"descricao\": \"Notebook premium com processador i9\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -60,
+      "description": "Substitua o ID com um ID válido de produto"
+    },
+    {
+      "_id": "req_prod_delete",
+      "_type": "request",
+      "parentId": "fld_produtos",
+      "url": "{{ _.baseUrl }}/produtos/f6209858-7c23-4ef8-9356-1336f9c3d373",
+      "name": "🗑️ Deletar Produto",
+      "method": "DELETE",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -50,
+      "description": "Substitua o ID com um ID válido de produto"
+    },
+    {
+      "_id": "fld_saude",
+      "_type": "request_group",
+      "parentId": "wrk_api_produtos",
+      "name": "💚 Health Check (Sem Auth)",
+      "metaSortKey": -50
+    },
+    {
+      "_id": "req_health",
+      "_type": "request",
+      "parentId": "fld_saude",
+      "url": "http://localhost:3000/api/health",
+      "name": "✅ Health Check",
+      "method": "GET",
+      "metaSortKey": -100,
+      "description": "Não requer autenticação"
+    }
+  ]
+}

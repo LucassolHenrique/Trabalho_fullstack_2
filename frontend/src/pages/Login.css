@@ -1,0 +1,94 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  background: radial-gradient(circle at 10% 20%, rgba(9, 13, 22, 1) 0%, rgba(13, 19, 34, 1) 90%);
+  padding: 20px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--surface-low);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle glowing accent inside the card */
+.login-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(33, 112, 228, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.login-header {
+  margin-bottom: 32px;
+}
+
+.login-logo {
+  color: var(--primary);
+  display: inline-flex;
+  padding: 12px;
+  background-color: var(--primary-glow);
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+
+.login-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.login-alert {
+  background-color: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 12px;
+  border-radius: var(--border-radius);
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.login-footer {
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.login-footer-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-family: var(--font-family);
+  transition: var(--transition);
+}
+
+.login-footer-link:hover {
+  color: var(--text-main);
+  text-decoration: underline;
+}
