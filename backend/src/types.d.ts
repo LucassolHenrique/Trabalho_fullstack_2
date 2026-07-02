@@ -1,2 +1,4 @@
 declare module 'jsonwebtoken';
 declare module 'bcryptjs';
+declare module 'swagger-ui-express';
+declare module 'swagger-jsdoc';

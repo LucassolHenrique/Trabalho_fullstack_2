@@ -15,7 +15,7 @@ export class CategoriaController {
 
   async getCategoriaById(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const { id } = req.params as { id: string };
       const categoria = await this.categoriaService.getCategoriaById(id);
       res.status(200).json(categoria);
     } catch (error: any) {
@@ -35,7 +35,7 @@ export class CategoriaController {
 
   async updateCategoria(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const { id } = req.params as { id: string };
       const { nome, descricao } = req.body;
       const categoria = await this.categoriaService.updateCategoria(id, nome, descricao);
       res.status(200).json(categoria);
@@ -46,7 +46,7 @@ export class CategoriaController {
 
   async deleteCategoria(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const { id } = req.params as { id: string };
       await this.categoriaService.deleteCategoria(id);
       res.status(204).send();
     } catch (error: any) {

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import express from 'express';
-// import swaggerUi from 'swagger-ui-express';
+import swaggerUi from 'swagger-ui-express';
 import { DataSource } from 'typeorm';
 import { Categoria } from './model/Categoria';
 import { Produto } from './model/Produto';
@@ -20,7 +20,7 @@ import { createUsuarioRouter } from './router/usuarioRouter';
 import { UsuarioController } from './controller/UsuarioController';
 import { authenticateToken } from './middleware/authenticateToken';
 import { authorizeRole } from './middleware/authorizeRole';
-// import { swaggerSpec } from './config/swagger';
+import { swaggerSpec } from './config/swagger';
 
 // Configuração do DataSource (banco de dados)
 const appDataSource = new DataSource({
@@ -52,7 +52,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Swagger UI
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { swaggerOptions: { persistAuthorization: true } }));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { swaggerOptions: { persistAuthorization: true } }));
 
 // Rotas de saúde
 app.get('/api/health', (req, res) => {

@@ -15,7 +15,7 @@ export class ProdutoController {
 
   async getProdutoById(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const { id } = req.params as { id: string };
       const produto = await this.produtoService.getProdutoById(id);
       res.status(200).json(produto);
     } catch (error: any) {
@@ -25,7 +25,7 @@ export class ProdutoController {
 
   async getProdutosByCategoria(req: Request, res: Response): Promise<void> {
     try {
-      const { categoriaId } = req.params;
+      const { categoriaId } = req.params as { categoriaId: string };
       const produtos = await this.produtoService.getProdutosByCategoria(categoriaId);
       res.status(200).json(produtos);
     } catch (error: any) {
@@ -51,7 +51,7 @@ export class ProdutoController {
 
   async updateProduto(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const { id } = req.params as { id: string };
       const { nome, preco, categoriaId, descricao, estoque } = req.body;
       const produto = await this.produtoService.updateProduto(
         id,
@@ -69,7 +69,7 @@ export class ProdutoController {
 
   async deleteProduto(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const { id } = req.params as { id: string };
       await this.produtoService.deleteProduto(id);
       res.status(204).send();
     } catch (error: any) {
@@ -92,7 +92,7 @@ export class ProdutoController {
 
   async ajustarEstoque(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const { id } = req.params as { id: string };
       const { quantidade } = req.body;
       const produto = await this.produtoService.ajustarEstoque(id, Number(quantidade));
       res.status(200).json(produto);

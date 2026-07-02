@@ -39,46 +39,6 @@ Para garantir uma interface que impressione visualmente e proporcione uma excele
 
 ---
 
-## 💡 Ideia 2: Vitrine Virtual e Catálogo Interativo (Client Storefront)
-*Focado na experiência do cliente final navegando no catálogo e simulando compras.*
-
-### 🛠️ Telas e Componentes
-1.  **Catálogo de Produtos (Home Pública):**
-    *   Grid responsivo de cards de produtos muito elegante, contendo imagens ilustrativas (ou placeholders premium de cores sólidas com gradientes), nome, preço formatado, e indicador de disponibilidade em estoque.
-    *   Menu lateral colapsável com filtro por Categorias, controle de preço mínimo/máximo (slider) e ordenação por preço.
-2.  **Detalhes do Produto (Rota Dinâmica `/produto/:id`):**
-    *   Exibição detalhada do produto com descrição completa, categoria correspondente, preço em destaque e quantidade desejada para simulação de compra.
-3.  **Carrinho de Compras Flutuante (Estado Global/Local):**
-    *   Gaveta lateral (Drawer) que exibe os produtos adicionados, cálculo dinâmico de subtotal, frete fictício e botão de checkout.
-4.  **Portal do Cliente (Login/Cadastro):**
-    *   O usuário precisa se autenticar para efetivar a compra.
-
-### ⚙️ Funcionalidades de Negócio (Requisito Conceito A)
-*   **Simulador de Compra (Checkout):** Ao clicar em "Finalizar Compra", a SPA envia requisições `PUT` para a API diminuindo o estoque dos produtos adquiridos. Caso um produto não possua estoque suficiente no banco, o front-end avisa o cliente amigavelmente e bloqueia a ação.
-*   **Histórico Fictício de Pedidos:** Tela onde o cliente visualiza as compras simuladas que foram gravadas em estado local (`localStorage`) associadas ao seu usuário.
-
----
-
-## 💡 Ideia 3: Sistema de Inventário e Auditoria de Estoque
-*Focado no controle rígido de perdas, entradas e rastreamento de mercadorias.*
-
-### 🛠️ Telas e Componentes
-1.  **Painel de Auditoria Geral (Home Privada):**
-    *   Indicadores de valor monetário total em estoque (Soma de `preço * estoque` de todos os produtos).
-    *   Alerta de ruptura de estoque (produtos com estoque zerado) destacados em vermelho vibrante.
-    *   Filtro de busca avançada multi-campos.
-2.  **Formulário de Entrada/Saída de Mercadoria:**
-    *   Formulário robusto com validações completas (quantidade não pode ser negativa, preço de custo coerente).
-    *   Combobox (Select) dinâmico que busca as Categorias existentes na API.
-3.  **Relatório de Categorias:**
-    *   Exibição das categorias em estilo "Cards de Pasta" com o total de itens vinculados a elas e descrição detalhada.
-
-### ⚙️ Funcionalidades de Negócio (Requisito Conceito A)
-*   **Auditoria Rápida (Estoque Crítico):** Aba de "Ações Urgentes" que lista apenas produtos abaixo de um limite de estoque (ex: menor que 5 unidades). O usuário pode repor o estoque diretamente com um clique por meio de um formulário simplificado em linha na própria tabela.
-*   **Relatório de Exportação (Simulado):** Botão que gera um arquivo formatado (ex: CSV fictício gerado no próprio navegador ou impressão formatada da tela em PDF) contendo a lista consolidada de produtos e valores do inventário.
-
----
-
 ## 🧬 Estrutura de Pastas Recomendada (Front-end)
 
 Para manter o projeto limpo, escalável e bem avaliado em componentização:
