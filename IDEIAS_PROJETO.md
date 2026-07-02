@@ -1,9 +1,3 @@
-# Ideias de Projetos Front-end para Integração
-
-Abaixo estão detalhadas três ideias completas de aplicação front-end utilizando React, integradas com a API de **Produtos, Categorias e Usuários** do Trabalho 1. Todas as ideias são focadas em alcançar o **Conceito A**, com designs premium, interações dinâmicas e funcionalidades de negócio integradas.
-
----
-
 ## 🎨 Diretrizes Gerais de Design & UX (Premium)
 
 Para garantir uma interface que impressione visualmente e proporcione uma excelente experiência de uso:
