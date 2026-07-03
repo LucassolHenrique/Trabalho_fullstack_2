@@ -79,29 +79,3 @@ npm run dev
 *   [x] **Ajuste Rápido de Estoque:** Controle rápido de estoque diretamente na tabela de listagem de produtos (`PATCH /produtos/:id/estoque`).
 *   [x] **Testes Unitários Automatizados:** Testes criados no backend para validação das regras de estoque e reajustes.
 *   [x] **Swagger UI:** Documentação ativa em `http://localhost:3000/api-docs` com exemplos de payloads e autenticação de token.
-
----
-
-## 🖥️ Roteiro de Apresentação (O que apresentar para o Professor)
-
-Demonstre o projeto para o professor seguindo esta sequência lógica para validar todas as funcionalidades:
-
-1.  **Tela de Login e Token JWT (Conceito A):**
-    *   Mostre a tela de login inicial `/login`. Tente logar com campo vazio para mostrar a validação.
-    *   Faça login com a conta de Administrador/Operador (`admin@example.com` / `senha123`).
-2.  **Dashboard de Controle (Conceito B e A):**
-    *   Exiba os totalizadores dinâmicos e o gráfico de distribuição de categorias.
-    *   Destaque a seção de **Estoque Crítico** mostrando produtos abaixo de 5 unidades.
-3.  **Controle de Permissões RBAC (Conceito A):**
-    *   Deslogue do sistema e acesse com a conta de Visualizador (`visualizador@example.com` / `senha123`).
-    *   Mostre que todos os botões de ação e cadastros (Produtos/Categorias) sumiram ou foram bloqueados para este usuário.
-4.  **CRUDs e Validações (Conceito C e B):**
-    *   Logue de volta como Admin. Vá para a página de **Categorias** e faça o ciclo completo: Crie, Edite e Exclua uma categoria.
-    *   Vá para a página de **Produtos** e mostre os filtros rápidos de busca textual e filtro por categoria funcionando em tempo real.
-    *   Tente cadastrar um produto com preço negativo para demonstrar a validação de formulário. Conclua o CRUD do produto.
-5.  **Regras de Negócio Integradas (Conceito A):**
-    *   **Incremento rápido:** Clique nos botões de `+` e `-` na tabela de produtos e mostre o estoque alterando na hora (via chamada `PATCH`).
-    *   **Ajuste em lote:** No dashboard, selecione uma categoria, escolha a opção "Dar Desconto", informe a porcentagem e clique em aplicar. Mostre que os produtos daquela categoria tiveram o preço reajustados de forma conjunta.
-6.  **Testes e Swagger UI (Conceito A):**
-    *   Apresente o Swagger UI em `http://localhost:3000/api-docs` mostrando a documentação organizada de Usuários, Produtos, Categorias, com exemplos de payloads e autorização JWT configurada.
-    *   Mostre os testes unitários passando executando `npm test` no console do backend.
